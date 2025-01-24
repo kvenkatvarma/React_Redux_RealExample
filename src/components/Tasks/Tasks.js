@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import "./Tasks.css";
 import Collapsible from "../Collapsable/collapsable";
+
 function Tasks(){
     let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
 
