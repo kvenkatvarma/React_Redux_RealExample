@@ -7,8 +7,11 @@ import { toDisplayableDateFormat } from "../../utils";
 
 function Tasks(){
    let tasks = useSelector(state=>state.tasks);
+  
    let [taskTitle,setTaskTitle] =useState("");
    let [taskDateTime,setTaskDateTime] =useState("");
+   let [search,setSearch] =useState("");
+   let filteredTasks = tasks.filter(task=>task.taskTitle.toLowerCase().indexOf(search.toLowerCase()) >=0);
 
     let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
     let dispatch= useDispatch();
@@ -84,11 +87,13 @@ function Tasks(){
                 </div>   
              </Collapsible>
              <div className="search-box">
-                <input type="search" placeholder="Search"/><i className="fa fa-search"></i>
+                <input type="search" value={search} onChange={(event)=>{
+                    setSearch(event.target.value);
+                }} placeholder="Search"/><i className="fa fa-search"></i>
             </div>    
             
             <div className="content-body">
-                {tasks.map(task=>
+                {filteredTasks.map(task=>
                                     <div className="task" key={task.id}>
                                     <div className="task-body" >
                                        <div className="task-title">
