@@ -1,19 +1,40 @@
 import React,{useState} from "react";
 import "./Tasks.css";
 import Collapsible from "../Collapsable/collapsable";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import actions from "../../actions";
+import { toDisplayableDateFormat } from "../../utils";
 
 function Tasks(){
    let tasks = useSelector(state=>state.tasks);
-    let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
+   let [taskTitle,setTaskTitle] =useState("");
+   let [taskDateTime,setTaskDateTime] =useState("");
 
+    let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
+    let dispatch= useDispatch();
     let onSaveClick=()=>{
+        //dispatch
+        dispatch(actions.createTask({
+            id: Math.floor(Math.random() * 10000000),     
+            taskTitle:taskTitle,
+            taskDateTime:taskDateTime
+        } 
+        ));
+        setTaskTitle("");
+        setTaskDateTime("");
         setIsNewTaskOpen(!isNewTaskOpen);
     };
 
     let onCancelClick=()=>{
         setIsNewTaskOpen(!isNewTaskOpen);
     };
+
+    let onDeleteClick=(task)=>{
+       if(window.confirm("Are you sure to delete this task"))
+       {
+        dispatch(actions.deleteTask(task.id));
+       }
+    }
   return(
       <div className="outer-container">
           <div className="container">
@@ -35,14 +56,18 @@ function Tasks(){
                     <div className="form-group">
                         <label className="form-label" htmlFor="task-title">Task Title</label>
                         <div className="form-input">
-                        <input type="text" placeholder="Task Title" className="text-box" id="task-title"></input>
+                        <input type="text" placeholder="Task Title" className="text-box" id="task-title" value={taskTitle} onChange={(event)=>{
+                            setTaskTitle(event.target.value)
+                        }}></input>
                         </div>
                     </div>
 
                     <div className="form-group">
                         <label className="form-label" htmlFor="task-date-time">Task Date and Time:</label>
                             <div className="form-input">
-                                <input type="datetime-local" placeholder="Task Date and Time" className="text-box" id="task-date-time"></input>
+                                <input type="datetime-local" placeholder="Task Date and Time" className="text-box" id="task-date-time" value={taskDateTime} onChange={(event)=>{
+                            setTaskDateTime(event.target.value)
+                        }}></input>
                             </div>                     
                     </div>
                     
@@ -72,11 +97,11 @@ function Tasks(){
                                        </div>
                                        <div className="task-subtitle">
                                           <i className="far fa-clock"></i>
-                                          <span className="task-subtitle-text">{task.taskDateTime}</span>
+                                          <span className="task-subtitle-text">{toDisplayableDateFormat(task.taskDateTime)}</span>
                                        </div>
                                     </div>   
                                     <div className="task-options">
-                                              <button className="icon-button" title="Delete">&times;</button>
+                                              <button className="icon-button" title="Delete" onClick={()=>{(onDeleteClick(task))}}>&times;</button>
                                     </div>
                                 </div>
                 )}
