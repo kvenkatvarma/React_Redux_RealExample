@@ -1,8 +1,10 @@
 import React,{useState} from "react";
 import "./Tasks.css";
 import Collapsible from "../Collapsable/collapsable";
+import { useSelector } from "react-redux";
 
 function Tasks(){
+   let tasks = useSelector(state=>state.tasks);
     let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
 
     let onSaveClick=()=>{
@@ -61,38 +63,27 @@ function Tasks(){
             </div>    
             
             <div className="content-body">
+                {tasks.map(task=>
+                                    <div className="task" key={task.id}>
+                                    <div className="task-body" >
+                                       <div className="task-title">
+                                             <i className="fa fa-thumbtack"></i>
+                                            <span className="task-title-text">{task.taskTitle}</span>
+                                       </div>
+                                       <div className="task-subtitle">
+                                          <i className="far fa-clock"></i>
+                                          <span className="task-subtitle-text">{task.taskDateTime}</span>
+                                       </div>
+                                    </div>   
+                                    <div className="task-options">
+                                              <button className="icon-button" title="Delete">&times;</button>
+                                    </div>
+                                </div>
+                )}
                 
-                <div className="task">
-                    <div className="task-body">
-                       <div className="task-title">
-                             <i className="fa fa-thumbtack"></i>
-                            <span className="task-title-text">Bob's Appointment</span>
-                       </div>
-                       <div className="task-subtitle">
-                          <i className="far fa-clock"></i>
-                          <span className="task-subtitle-text">Jul 16th at 9:30am</span>
-                       </div>
-                    </div>   
-                    <div className="task-options">
-                              <button className="icon-button" title="Delete">&times;</button>
-                    </div>
-                </div>
 
-                <div className="task">
-                    <div className="task-body">
-                       <div className="task-title">
-                             <i className="fa fa-thumbtack"></i>
-                            <span className="task-title-text">Project Presentation</span>
-                       </div>
-                       <div className="task-subtitle">
-                          <i className="far fa-clock"></i>
-                          <span className="task-subtitle-text">Jul 17th at 9:30am</span>
-                       </div>
-                    </div>   
-                    <div className="task-options">
-                              <button className="icon-button" title="Delete">&times;</button>
-                    </div>
-                </div>
+
+           
 
             </div>
           </div>
