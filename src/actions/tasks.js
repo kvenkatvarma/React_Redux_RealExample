@@ -1,12 +1,9 @@
 import * as actionTypes from "../constants/action-types";
-
+import axios from "axios";
 export const fetchTasks =()=>async(dispatch,getState)=>{
-    var response =  await fetch("http://localhost:7000/tasks",{
-      method:"GET"
-     });   
-         var resp= await response.json();             
+         var response =  await axios.get("http://localhost:7000/tasks");                 
           dispatch ({
-           type:actionTypes.FETCH_TASKS,payload:resp
+           type:actionTypes.FETCH_TASKS,payload:response.data
           });       
  };
 
