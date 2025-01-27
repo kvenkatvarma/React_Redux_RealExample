@@ -11,10 +11,11 @@ function Tasks(){
    let [taskTitle,setTaskTitle] =useState("");
    let [taskDateTime,setTaskDateTime] =useState("");
    let [search,setSearch] =useState("");
+
    let dispatch= useDispatch();
 
    useEffect(()=>{
-     dispatch(actions.fetchTasks())
+     dispatch(actions.fetchTasks()) //it will invoke worker sage of fetchtasks
    },[dispatch]);
 
    let tasks = useSelector(state=>state.tasks);

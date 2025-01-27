@@ -2,7 +2,7 @@ import * as actionTypes from "../constants/action-types";
 import axios from "axios";
 
 export const fetchTasks =()=>({
-  type:"FETCH_TASKS",payload:axios.get("http://localhost:7000/tasks")}
+  type: actionTypes.FETCH_TASKS}
 );
 
  export const createTask =(newTask)=>({
