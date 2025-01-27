@@ -20,7 +20,7 @@ switch(action.type){
             return {data:state.data,loading:false,error:action.payload};
 
     case actionTypes.CREATE_TASK_FULFILLED:
-                return {data:[...state.data,action.payload],loading:false,error:""}   
+                return {data:[...state.data,action.payload.data],loading:false,error:""}   
     
     case actionTypes.DELETE_TASK_PENDING:
         return {data:state.data,loading:true,error:""};
@@ -28,7 +28,7 @@ switch(action.type){
     case actionTypes.DELETE_TASK_REJECTED:
             return {data:state.data,loading:false,error:action.payload};
 
-    case actionTypes.DELETE_TASK_FULFILLED:
+    case actionTypes.DELETE_TASK_FULFILLED:      
                 return {data:state.data.filter(task=>task.id != action.payload),loading:false,error:""}     
      default:
         return state;
