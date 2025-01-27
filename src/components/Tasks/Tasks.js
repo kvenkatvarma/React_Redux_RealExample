@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import "./Tasks.css";
 import Collapsible from "../Collapsable/collapsable";
 import { useSelector,useDispatch } from "react-redux";
@@ -6,15 +6,22 @@ import actions from "../../actions";
 import { toDisplayableDateFormat } from "../../utils";
 
 function Tasks(){
-   let tasks = useSelector(state=>state.tasks);
+ 
   
    let [taskTitle,setTaskTitle] =useState("");
    let [taskDateTime,setTaskDateTime] =useState("");
    let [search,setSearch] =useState("");
+   let dispatch= useDispatch();
+   useEffect(()=>{
+     dispatch(actions.fetchTasks())
+   },[dispatch]);
+
+   let tasks = useSelector(state=>state.tasks);
+   console.log("tasks",tasks);
    let filteredTasks = tasks.filter(task=>task.taskTitle.toLowerCase().indexOf(search.toLowerCase()) >=0);
 
     let [isNewTaskOpen,setIsNewTaskOpen] = useState(false);
-    let dispatch= useDispatch();
+    
     let onSaveClick=()=>{
         //dispatch
         dispatch(actions.createTask({

@@ -7,6 +7,8 @@ switch(action.type){
         return [...state,action.payload];
     case actionTypes.DELETE_TASK:
             return state.filter(task=>task.id != action.payload);
+     case actionTypes.FETCH_TASKS:
+                return action.payload;
      default:
         return state;
 }
