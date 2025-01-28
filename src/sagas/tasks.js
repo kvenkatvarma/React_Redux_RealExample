@@ -8,7 +8,7 @@ export const fetchTasksWorkerSaga =function*(){
     yield put({type:actionTypes.FETCH_TASKS_PENDING});
     try
     {
-        let response = yield axios.get("http://localhost:7000/tasks");
+        let response = yield call(api.fetchTasks);
         yield put({type:actionTypes.FETCH_TASKS_FULFILLED,payload:response});     
     }
     catch(error)

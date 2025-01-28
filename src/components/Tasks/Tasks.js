@@ -51,13 +51,19 @@ function Tasks(){
         dispatch(actions.deleteTask(task.id));
        }
     }
+    let onFetchCancelClick =()=>{
+         dispatch(actions.cancelFetchTasks());
+    };
   return(
       <div className="outer-container">
           <div className="container">
              <div className="app-title-container">
                 <div className="app-title">
                     <h1>Tasks 
-                          {tasks.loading ?  <i className="fas fa-spinner fa-spin"></i>:""}
+                          {tasks.loading ? <span>
+                            <i className="fas fa-spinner fa-spin"></i>
+                              <button className="button button-red" onClick={onFetchCancelClick}>Cancel</button>
+                          </span> :""}
                         </h1>
                         {tasks.error ?   <h2>{tasks.error.message}</h2> : ""}                      
                 </div>
@@ -125,11 +131,10 @@ function Tasks(){
                                               <button className="icon-button" title="Delete" onClick={()=>{(onDeleteClick(task))}}>&times;</button>
                                     </div>
                                 </div>
-                )}
-                
+                )}                
 
 
-           
+           {filteredTasks.length == 0 ? <div>No Tasks Loaded</div>:""}
 
             </div>
           </div>

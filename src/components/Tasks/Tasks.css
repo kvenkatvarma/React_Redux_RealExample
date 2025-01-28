@@ -209,6 +209,16 @@
     background-color: #024717;
   }
   
+  .button-red{
+    background-color: #bd0e0e;
+    margin-left:20px;
+  }
+
+  .button-red:hover{
+    background-color: #877171;
+   
+  }
+
   .cancel-button {
     background-color: #da9310;
   }

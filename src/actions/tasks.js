@@ -12,3 +12,6 @@ export const deleteTask =(taskId)=>({
           type:actionTypes.DELETE_TASK,payload:taskId});
            
 
+export const cancelFetchTasks =()=>({
+  type:actionTypes.FETCH_TASKS_CANCEL});
+    
