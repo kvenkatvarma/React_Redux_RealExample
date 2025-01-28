@@ -1,10 +1,14 @@
 import axios from "axios";
 import * as actionTypes from "../constants/action-types";
-import { put,call,retry, race ,take} from "redux-saga/effects";
+import { put,call,retry, race ,take, select} from "redux-saga/effects";
 import * as api from "../api/tasks";
 
 export const fetchTasksWorkerSaga =function*(){
    
+    yield select((state)=>{
+        console.log(state);
+    });
+    
     yield put({type:actionTypes.FETCH_TASKS_PENDING});
     try
     {
