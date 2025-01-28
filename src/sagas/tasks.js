@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "../constants/action-types";
-import { put,call,retry } from "redux-saga/effects";
+import { put,call,retry, race ,take} from "redux-saga/effects";
 import * as api from "../api/tasks";
 
 export const fetchTasksWorkerSaga =function*(){
@@ -8,8 +8,20 @@ export const fetchTasksWorkerSaga =function*(){
     yield put({type:actionTypes.FETCH_TASKS_PENDING});
     try
     {
-        let response = yield call(api.fetchTasks);
-        yield put({type:actionTypes.FETCH_TASKS_FULFILLED,payload:response});     
+        let {response,fetchCancel} = yield race({
+            response:call(api.fetchTasks),
+            fetchCancel:take(actionTypes.FETCH_TASKS_CANCEL)
+        });
+
+        if(fetchCancel)
+        {
+            yield put({type:actionTypes.FETCH_TASKS_REJECTED,payload:"Cancelled"});   
+        }
+        else
+        {
+            yield put({type:actionTypes.FETCH_TASKS_FULFILLED,payload:response});    
+        }       
+        
     }
     catch(error)
     {
