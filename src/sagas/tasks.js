@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "../constants/action-types";
-import { put } from "redux-saga/effects";
-
+import { put,call } from "redux-saga/effects";
+import * as api from "../api/tasks";
 
 export const fetchTasksWorkerSaga =function*(){
    
@@ -22,7 +22,7 @@ export const createTasksWorkerSaga =function*(action){
     yield put({type:actionTypes.CREATE_TASK_PENDING});
     try
     {
-        let response = yield axios.post("http://localhost:7000/tasks",action.payload);
+        let response = yield call(api.fetchTasks);
         yield put({type:actionTypes.CREATE_TASK_FULFILLED,payload:response});     
     }
     catch(error)
